@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<head>
+    <title>Generate Somethings</title>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='dog.png') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}"/>
+</head>
+
+<body>
+    <img src="{{ url_for('static', filename='dog.png') }}" class="icon"/>
+    <h3>Generate Somethings</h3>
+    <form action="/" method="post">
+        <input type="text" name="description" placeholder="Enter somethings" required/>
+        <input type="text" name="key" placeholder="Enter key">
+        <input type="text" name="api" placeholder="Enter api">
+        <select name="type" id="gen_type">
+            <option value="text">Text</option>
+            <option value="image">Image</option>
+        </select>
+        <select name="img_n" id="img_n">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select>
+        <select name="img_size" id="img_size">
+            <option value="small">256x256</option>
+            <option value="between">512x512</option>
+            <option value="big">1024*1024</option>
+        </select>
+        <select name="text_model" id="text_model">
+            <option value="text-ada-001">text-ada-001</option>
+            <option value="text-babbage-001">text-babbage-001</option>
+            <option value="text-curie-001">text-curie-001</option>
+            <option value="text-davinci-003">text-davinci-003</option>
+        </select>
+        <input type="submit" value="Generate"/>
+    </form>
+    {% if result %}
+        <p>生成的内容为{{gen_type}}</p>
+        {% if "https://" in result %}
+            <img class="gen_image" id="gen_img" src="{{ result }}" />
+        {% else %}
+            <textarea class="result" id="result">{{ result }}</textarea>
+        {% endif %}
+    {% endif %}
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>

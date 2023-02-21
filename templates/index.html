@@ -2,8 +2,9 @@
 <head>
     <title>Generate Somethings</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}" />
     <script src="{{ url_for('static', filename='auto-number-textarea.js') }}"></script>
-    <script src="{{ url_for('static', filename='main.js') }}"></script>
     <link rel="shortcut icon" href="{{ url_for('static', filename='dog.png') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
 </head>
@@ -12,11 +13,61 @@
     <img src="{{ url_for('static', filename='dog.png') }}" class="icon" />
     <h3>Generate Somethings</h3>
     <form action="/" method="post">
-        <input type="text" name="description" placeholder="Enter somethings" required />
-        <input type="text" name="key" placeholder="Enter key">
-        <input type="submit" value="Generate" />
+        <div class="mb-3 row">
+            <label for="description" class="col-sm-2 col-form-label">description</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="description" name="description" placeholder="Enter somethings" required >
+            </div>
+          </div>
+
+            <div class="mb-3 row">
+            <label for="key" class="col-sm-2 col-form-label">key</label>
+            <div class="col-sm-10">
+              <input type="password" class="form-control" id="key" name="key" placeholder="Enter key">
+            </div>
+          </div>
+        <select class="form-select" name="gen_type">
+            <option selected value="text">Open this select menu to select gen type</option>
+              <option value="text">Text</option>
+              <option value="image">Image</option>
+        </select>
+        <select class="form-select" name="gen_img_n">
+            <option selected value="1">Open this select menu to select the number of images to generate</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select>
+        <select class="form-select" name="gen_img_size">
+            <option selected value="text">Open this select menu to select image size</option>
+              <option value="small">256x256</option>
+              <option value="medium">512x512</option>
+              <option value="large">1024x1024</option>
+        </select>
+        <select class="form-select" name="gen_text_module">
+            <option selected value="text">Open this select menu to select gen text module</option>
+                <option value="0">text-ada-001</option>
+                <option value="1">text-babbage-001</option>
+                <option value="2">text-curie-001</option>
+                <option value="3">text-davinci-003</option>
+        </select>
+        <input type="submit" value="Generate" class="btn btn-primary mb-3" />
     </form>
     {% if result %}
-    <textarea class="result" id="result">{{ result }}</textarea>
+        {% if "https://" in result %}
+            <img src="{{ result }}" class="img-fluid" title="{{ title }}">
+        {% else %}
+            <div class="form-floating">
+              <textarea class="form-control result" id="result" style="height: 520px; width: 1024px">{{ result }}</textarea>
+              <label for="result">Type is {{ gen_type }}, Description is {{ title }}, Result is</label>
+            </div>
+        {% endif %}
     {% endif %}
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
